@@ -2,6 +2,7 @@ package org.example.services;
 
 
 
+import org.example.menu.MainMenu;
 import org.example.utils.DatabaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class ApplicationService {
 
 
             // További logika (pl. lekérdezések futtatása)
+            // Menü megjelenítése
+            MainMenu mainMenu = new MainMenu(scanner);
+            mainMenu.displayMenu();
 
 
         } catch (Exception e) {
