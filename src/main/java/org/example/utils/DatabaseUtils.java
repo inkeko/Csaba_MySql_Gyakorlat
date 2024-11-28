@@ -14,6 +14,7 @@ import java.sql.SQLException;
 @Component
 public class DatabaseUtils {
 
+    private Connection connection;
     @Value("${spring.datasource.url}")
     private String databaseUrl;
 
@@ -30,9 +31,13 @@ public class DatabaseUtils {
      */
     public Connection connect(String username, String password) throws DatabaseConnectionException {
         try {
-            validateCredentials(username, password); // Itt lehet, hogy többféle kivétel is dobódik
+            validateCredentials(username, password); // Hitelesítési ellenőrzés
             DataSource dataSource = createDataSource(username, password);
-            return dataSource.getConnection();
+
+            // Inicializáljuk a `connection` mezőt
+            connection = dataSource.getConnection();
+
+            return connection;
         } catch (SQLException | DatabaseConnectionException | InvalidPasswordException e) {
             // Itt mindent egy DatabaseConnectionException típusúba csomagolunk
             throw new DatabaseConnectionException("Sikertelen adatbázis-kapcsolódás: " + e.getMessage(), e);
@@ -46,7 +51,7 @@ public class DatabaseUtils {
      * @param username a felhasználónév
      * @param password a jelszó
      * @throws DatabaseConnectionException ha a felhasználónév üres
-     * @throws InvalidPasswordException ha a jelszó nem felel meg a szabályoknak
+     * @throws InvalidPasswordException    ha a jelszó nem felel meg a szabályoknak
      */
     private void validateCredentials(String username, String password) throws DatabaseConnectionException, InvalidPasswordException {
         if (username == null || username.isBlank()) {
@@ -81,8 +86,19 @@ public class DatabaseUtils {
      * @throws InvalidPasswordException ha a jelszó nem csak számokat tartalmaz
      */
     private void validatePassword(String password) throws InvalidPasswordException {
-        if (!password.matches("\\d+")) {
-            throw new InvalidPasswordException("A jelszó csak számokat tartalmazhat!");
+        // Regex: Csak számokat, kisbetűket és nagybetűket enged.
+        if (!password.matches("[a-zA-Z0-9]+")) {
+            throw new InvalidPasswordException("A jelszó csak számokat, kisbetűket és nagybetűket tartalmazhat!");
+        }
+        // Ellenőrizzük, hogy a jelszó hossza legalább 8 karakter.
+        if (password.length() < 8) {
+            throw new InvalidPasswordException("A jelszónak legalább 8 karakter hosszúnak kell lennie!");
         }
     }
+
+
+    public Connection getConnection() {
+        return connection;
+    }
+
 }

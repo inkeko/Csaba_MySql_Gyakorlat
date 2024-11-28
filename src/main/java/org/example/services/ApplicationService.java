@@ -16,6 +16,8 @@ public class ApplicationService {
     @Autowired
     private DatabaseUtils databaseUtils;
 
+    @Autowired
+    private TableService tableService;
     public void start() {
         Scanner scanner = new Scanner(System.in);
 
@@ -28,12 +30,16 @@ public class ApplicationService {
             String password = scanner.nextLine();
             // Kapcsolódás az adatbázishoz
             Connection conn = databaseUtils.connect(username, password);
+            if (conn == null) {
+                System.err.println("Hiba: Nem sikerült csatlakozni az adatbázishoz!");
+                return;
+            }
             System.out.println("Sikeresen kapcsolódott az adatbázishoz!");
 
 
             // További logika (pl. lekérdezések futtatása)
             // Menü megjelenítése
-            MainMenu mainMenu = new MainMenu(scanner);
+            MainMenu mainMenu = new MainMenu(scanner,tableService);
             mainMenu.displayMenu();
 
 
