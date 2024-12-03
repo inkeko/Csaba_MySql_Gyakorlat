@@ -7,6 +7,7 @@ import java.util.Scanner;
 public abstract class BaseMenu {
     private final List<MenuItem> menuItems = new ArrayList<>();
     private final Scanner scanner;
+    private boolean exit = false; // Exit flag
 
     public BaseMenu(Scanner scanner) {
         this.scanner = scanner;
@@ -16,8 +17,17 @@ public abstract class BaseMenu {
         menuItems.add(item);
     }
 
+    public void setExit(boolean exit) {
+        this.exit = exit; // Állítsuk be az exit flag-et
+    }
+
+    public boolean isExit() {
+        return exit; // Ellenőrizzük az exit állapotot
+    }
+
     public void displayMenu() {
-        while (true) {
+        exit = false; // Alapértelmezés szerint ne lépjünk ki
+        while (!exit) { // A ciklus addig fut, amíg az exit false
             System.out.println("\nMenü:");
             for (int i = 0; i < menuItems.size(); i++) {
                 System.out.println((i + 1) + ". " + menuItems.get(i).getLabel());
@@ -29,6 +39,7 @@ public abstract class BaseMenu {
 
             if (choice == 0) {
                 System.out.println("Kilépés...");
+                setExit(true); // Állítsuk be a kilépést
                 break;
             }
 
@@ -48,3 +59,4 @@ public abstract class BaseMenu {
         }
     }
 }
+

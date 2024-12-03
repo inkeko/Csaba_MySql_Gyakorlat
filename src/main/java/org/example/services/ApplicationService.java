@@ -18,6 +18,7 @@ public class ApplicationService {
 
     @Autowired
     private TableService tableService;
+    private CityService cityService;
     public void start() {
         Scanner scanner = new Scanner(System.in);
 
@@ -39,7 +40,7 @@ public class ApplicationService {
 
             // További logika (pl. lekérdezések futtatása)
             // Menü megjelenítése
-            MainMenu mainMenu = new MainMenu(scanner,tableService);
+            MainMenu mainMenu = new MainMenu(scanner,tableService,cityService);
             mainMenu.displayMenu();
 
 

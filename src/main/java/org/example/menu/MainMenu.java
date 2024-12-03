@@ -1,16 +1,24 @@
 package org.example.menu;
 
+import org.example.services.CityService;
 import org.example.services.TableService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
-
+@Component
 public class MainMenu extends BaseMenu {
 
     private final TableService tableService;
+    private final CityService cityService;
 
-    public MainMenu(Scanner scanner, TableService tableService) {
+    @Autowired
+    public MainMenu(Scanner scanner, TableService tableService, CityService cityService) {
         super(scanner);
         this.tableService = tableService;
+        this.cityService = cityService;
+
+
 
         addMenuItem(new MenuItem("Listázza az összes táblanevet") {
             @Override
@@ -24,6 +32,15 @@ public class MainMenu extends BaseMenu {
             @Override
             public void execute() {
                 System.out.println("Lekérdezés futtatása opció kiválasztva.");
+                tableService.executeCustomQuery(scanner);
+            }
+        });
+
+        addMenuItem(new MenuItem("Városok keresése") {
+            @Override
+            public void execute() {
+                CitySearchMenu citySearchMenu = new CitySearchMenu(scanner, cityService);
+                citySearchMenu.displayMenu(); // Az almenü elindul
             }
         });
 
