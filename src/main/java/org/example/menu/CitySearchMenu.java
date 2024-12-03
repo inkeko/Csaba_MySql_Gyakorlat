@@ -2,17 +2,19 @@ package org.example.menu;
 
 import org.example.services.CityService;
 import org.example.worldEntity.City;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Scanner;
 
 
-
+@Service
 public class CitySearchMenu extends BaseMenu {
 
     private final CityService cityService;
 
+    @Autowired
     public CitySearchMenu(Scanner scanner, CityService cityService) {
         super(scanner);
         this.cityService = cityService;

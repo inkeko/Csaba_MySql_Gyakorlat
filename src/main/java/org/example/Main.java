@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.example.services.ApplicationService;
 
+import java.util.Arrays;
+
 @SpringBootApplication(scanBasePackages = "org.example")
 public class Main {
 
@@ -19,5 +21,10 @@ public class Main {
 
         // Alkalmazás indítása
         appService.start();
+        String[] beans = context.getBeanDefinitionNames();
+        Arrays.sort(beans);
+        for (String bean : beans) {
+            System.out.println(bean);
+        }
     }
 }
