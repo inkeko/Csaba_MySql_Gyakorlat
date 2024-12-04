@@ -32,7 +32,7 @@ public abstract class BaseMenu {
             for (int i = 0; i < menuItems.size(); i++) {
                 System.out.println((i + 1) + ". " + menuItems.get(i).getLabel());
             }
-            System.out.println("0. Kilépés");
+          //  System.out.println("0. Kilépés");
 
             System.out.print("Kérem, válasszon egy opciót: ");
             int choice = getChoice();

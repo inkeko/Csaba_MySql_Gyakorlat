@@ -1,7 +1,6 @@
 package org.example;
 
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -21,10 +20,5 @@ public class Main {
 
         // Alkalmazás indítása
         appService.start();
-        String[] beans = context.getBeanDefinitionNames();
-        Arrays.sort(beans);
-        for (String bean : beans) {
-            System.out.println(bean);
-        }
     }
 }

@@ -6,27 +6,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CityService {
 
     private final CityRepository cityRepository;
 
-  @Autowired
+    @Autowired
     public CityService(CityRepository cityRepository) {
         this.cityRepository = cityRepository;
     }
 
-    public List<City> searchByCountryCode(String countryCode) {
+    public List<Map<String, Object>> searchByCountryCode(String countryCode) {
         return cityRepository.findByCountryCode(countryCode);
     }
 
-    public List<City> searchByMinPopulation(int minPopulation) {
+    public List<Map<String, Object>> searchByMinPopulation(int minPopulation) {
         return cityRepository.findByMinPopulation(minPopulation);
     }
 
-    public List<City> searchByName(String name) {
+    public List<Map<String, Object>> searchByName(String name) {
         return cityRepository.findByName(name);
     }
 }
-

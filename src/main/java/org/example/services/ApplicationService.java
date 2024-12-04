@@ -1,7 +1,7 @@
 package org.example.services;
 
 
-
+import org.example.menu.CitySearchMenu;
 import org.example.menu.MainMenu;
 import org.example.utils.DatabaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,35 +14,28 @@ import java.util.Scanner;
 public class ApplicationService {
 
     @Autowired
-    private DatabaseUtils databaseUtils;
+    private DatabaseUtils databaseUtils; // Segédosztály az adatbázis-kezeléshez
 
     @Autowired
-    private TableService tableService;
-    private CityService cityService;
+    CitySearchMenu citySearchMenu;
+
     public void start() {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            // Felhasználói bemenetek bekérése
             System.out.print("Kérem, adja meg a felhasználónevet: ");
             String username = scanner.nextLine();
 
             System.out.print("Kérem, adja meg a jelszót: ");
             String password = scanner.nextLine();
+
             // Kapcsolódás az adatbázishoz
-            Connection conn = databaseUtils.connect(username, password);
-            if (conn == null) {
-                System.err.println("Hiba: Nem sikerült csatlakozni az adatbázishoz!");
-                return;
-            }
+            Connection connection = databaseUtils.connect(username, password);
             System.out.println("Sikeresen kapcsolódott az adatbázishoz!");
 
-
-            // További logika (pl. lekérdezések futtatása)
-            // Menü megjelenítése
-            MainMenu mainMenu = new MainMenu(scanner,tableService,cityService);
+            // Főmenü megjelenítése
+            MainMenu mainMenu = new MainMenu(scanner,citySearchMenu);
             mainMenu.displayMenu();
-
 
         } catch (Exception e) {
             System.err.println("Hiba történt: " + e.getMessage());
