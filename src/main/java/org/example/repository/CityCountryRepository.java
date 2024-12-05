@@ -32,7 +32,7 @@ public class CityCountryRepository {
         String sql = """
             SELECT Name, Population
             FROM country
-            WHERE Region = ? AND Population >= ?;
+            WHERE Continent = ? AND Population >= ?;
         """;
 
         return jdbcTemplate.queryForList(sql, region, minPopulation);

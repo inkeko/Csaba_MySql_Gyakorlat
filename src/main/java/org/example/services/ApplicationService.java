@@ -5,6 +5,7 @@ import org.example.menu.CitySearchMenu;
 import org.example.menu.MainMenu;
 import org.example.utils.DatabaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -18,6 +19,10 @@ public class ApplicationService {
 
     @Autowired
     CitySearchMenu citySearchMenu;
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
 
     public void start() {
         Scanner scanner = new Scanner(System.in);
@@ -34,7 +39,7 @@ public class ApplicationService {
             System.out.println("Sikeresen kapcsolódott az adatbázishoz!");
 
             // Főmenü megjelenítése
-            MainMenu mainMenu = new MainMenu(scanner,citySearchMenu);
+            MainMenu mainMenu = applicationContext.getBean(MainMenu.class);
             mainMenu.displayMenu();
 
         } catch (Exception e) {

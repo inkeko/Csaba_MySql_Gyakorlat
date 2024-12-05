@@ -24,7 +24,10 @@ public class CityCountryService {
     }
 
     public List<Map<String, Object>> getCountriesByRegionAndMinPopulation(String region, int minPopulation) {
-        return cityCountryRepository.findCountriesByRegionAndMinPopulation(region, minPopulation);
+        List<Map<String, Object>> result = cityCountryRepository.findCountriesByRegionAndMinPopulation(region, minPopulation);
+        System.out.println("Lekérdezés eredménye: " + result); // Ellenőrizd, hogy vannak-e adatok
+        return result;
+       // return cityCountryRepository.findCountriesByRegionAndMinPopulation(region, minPopulation);
     }
 
     public void saveCountriesToPdf(String fileName, List<Map<String, Object>> data) {

@@ -17,15 +17,25 @@ public class PdfReaderService {
             PDFTextStripper stripper = new PDFTextStripper();
             String text = stripper.getText(document);
 
+            // Szöveg sorokra bontása
             String[] lines = text.split("\n");
             for (String line : lines) {
-                if (line.contains(":")) {
+                if (line.contains(":")) { // Csak azokat a sorokat dolgozzuk fel, amelyek tartalmaznak ":"
                     String[] parts = line.split(":");
-                    String populationString = parts[1].trim();
-                    totalPopulation += Integer.parseInt(populationString);
+                    if (parts.length == 2) {
+                        String populationString = parts[1].trim();
+                        if (!populationString.isEmpty()) { // Ha a szám nem üres
+                            try {
+                                int population = Integer.parseInt(populationString);
+                                totalPopulation += population;
+                            } catch (NumberFormatException e) {
+                                System.err.println("Nem megfelelő formátumú adat: " + populationString);
+                            }
+                        }
+                    }
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
