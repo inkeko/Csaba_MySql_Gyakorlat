@@ -11,14 +11,25 @@ import java.util.Map;
 public class CityCountryService {
 
     private final CityCountryRepository cityCountryRepository;
+    private final PdfWriterService pdfWriterService;
 
     @Autowired
-    public CityCountryService(CityCountryRepository cityCountryRepository) {
+    public CityCountryService(CityCountryRepository cityCountryRepository, PdfWriterService pdfWriterService) {
         this.cityCountryRepository = cityCountryRepository;
+        this.pdfWriterService = pdfWriterService;
     }
 
     public List<Map<String, Object>> getCitiesByRegionAndCountry(String region, String countryCode) {
         return cityCountryRepository.findCitiesByRegionAndCountry(region, countryCode);
     }
+
+    public List<Map<String, Object>> getCountriesByRegionAndMinPopulation(String region, int minPopulation) {
+        return cityCountryRepository.findCountriesByRegionAndMinPopulation(region, minPopulation);
+    }
+
+    public void saveCountriesToPdf(String fileName, List<Map<String, Object>> data) {
+        pdfWriterService.saveToPdf(fileName, data);
+    }
+
 }
 

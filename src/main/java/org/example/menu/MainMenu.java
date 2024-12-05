@@ -1,19 +1,27 @@
 package org.example.menu;
 
+import org.example.services.CityCountryService;
+import org.example.services.PdfReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 @Component
 public class MainMenu extends BaseMenu {
 
     private final CitySearchMenu citySearchMenu;
+    private final CityCountryService cityCountryService;
+    private final PdfReaderService pdfReaderService;
 
     @Autowired
-    public MainMenu(Scanner scanner, CitySearchMenu citySearchMenu) {
+    public MainMenu(Scanner scanner, CitySearchMenu citySearchMenu,CityCountryService cityCountryService,PdfReaderService pdfReaderService) {
         super(scanner);
         this.citySearchMenu = citySearchMenu;
+        this.cityCountryService = cityCountryService;
+        this.pdfReaderService = pdfReaderService;
 
         addMenuItem(new MenuItem("Listázza az összes táblanevet") {
             @Override
@@ -35,6 +43,31 @@ public class MainMenu extends BaseMenu {
             @Override
             public void execute() {
                 citySearchMenu.displayMenu(); // Almenü elindítása
+            }
+        });
+
+        addMenuItem(new MenuItem("Régiók lakosságának mentése és összegzése") {
+            @Override
+            public void execute() {
+                System.out.print("Adja meg a régió nevét (pl. Europe): ");
+                String region = scanner.nextLine();
+
+                System.out.print("Adja meg a minimális lakosságot: ");
+                int minPopulation = scanner.nextInt();
+                scanner.nextLine(); // newline elfogyasztása
+
+                String fileName = "region_population.pdf";
+
+                // Lekérdezés
+                List<Map<String, Object>> data = cityCountryService.getCountriesByRegionAndMinPopulation(region, minPopulation);
+
+                // PDF mentés
+                cityCountryService.saveCountriesToPdf(fileName, data);
+
+                // PDF visszaolvasás és összegzés
+                int totalPopulation = pdfReaderService.calculateTotalPopulation(fileName);
+
+                System.out.println("Az összesített lakosság: " + totalPopulation + " fő");
             }
         });
 

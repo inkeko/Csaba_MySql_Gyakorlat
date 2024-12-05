@@ -27,6 +27,14 @@ public class CityCountryRepository {
         """;
         return jdbcTemplate.queryForList(sql, region, countryCode);
     }
+
+    public List<Map<String, Object>> findCountriesByRegionAndMinPopulation(String region, int minPopulation) {
+        String sql = """
+            SELECT Name, Population
+            FROM country
+            WHERE Region = ? AND Population >= ?;
+        """;
+
+        return jdbcTemplate.queryForList(sql, region, minPopulation);
+    }
 }
-
-
