@@ -17,15 +17,15 @@ public class CityCountryRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Map<String, Object>> findCitiesByRegionAndCountry(String region, String countryCode) {
+    public List<Map<String, Object>> findCitiesByRegionAndCountry(String Continent, String countryCode) {
         String sql = """
             SELECT c.ID, c.Name AS CityName, c.District, c.Population, 
-                   co.Name AS CountryName, co.Region
+                   co.Name AS CountryName, co.Continent
             FROM city c
             JOIN country co ON c.CountryCode = co.Code
-            WHERE co.Region = ? AND co.Code = ?;
+            WHERE co.Continent = ? AND co.Code = ?;
         """;
-        return jdbcTemplate.queryForList(sql, region, countryCode);
+        return jdbcTemplate.queryForList(sql, Continent, countryCode);
     }
 
     public List<Map<String, Object>> findCountriesByRegionAndMinPopulation(String region, int minPopulation) {

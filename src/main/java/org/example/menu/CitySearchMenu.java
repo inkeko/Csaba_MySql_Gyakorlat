@@ -52,14 +52,14 @@ private final CityCountryService cityCountryService;
             @Override
             public void execute() {
                 System.out.print("Adja meg a régió nevét: ");
-                String region = scanner.nextLine();
+                String Continent = scanner.nextLine();
 
                 System.out.print("Adja meg az országkódot: ");
                 String countryCode = scanner.nextLine();
                 // Alakítsd az országkódot csupa nagybetűssé
                 countryCode = countryCode.toUpperCase();
 
-                List<Map<String, Object>> results = cityCountryService.getCitiesByRegionAndCountry(region, countryCode);
+                List<Map<String, Object>> results = cityCountryService.getCitiesByRegionAndCountry(Continent, countryCode);
                 if (results.isEmpty()) {
                     System.out.println("Nincs találat.");
                 } else {

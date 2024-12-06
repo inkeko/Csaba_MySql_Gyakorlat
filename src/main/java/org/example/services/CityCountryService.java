@@ -19,8 +19,8 @@ public class CityCountryService {
         this.pdfWriterService = pdfWriterService;
     }
 
-    public List<Map<String, Object>> getCitiesByRegionAndCountry(String region, String countryCode) {
-        return cityCountryRepository.findCitiesByRegionAndCountry(region, countryCode);
+    public List<Map<String, Object>> getCitiesByRegionAndCountry(String Continent, String countryCode) {
+        return cityCountryRepository.findCitiesByRegionAndCountry(Continent, countryCode);
     }
 
     public List<Map<String, Object>> getCountriesByRegionAndMinPopulation(String region, int minPopulation) {

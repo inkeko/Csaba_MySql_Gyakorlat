@@ -60,7 +60,7 @@ public class DatabaseUtils {
         if (password == null || password.isBlank()) {
             throw new DatabaseConnectionException("A jelszó nem lehet üres!");
         }
-        validatePassword(password);
+
     }
 
     /**
@@ -79,22 +79,7 @@ public class DatabaseUtils {
         return dataSource;
     }
 
-    /**
-     * Jelszó validálása: csak számokat tartalmazhat.
-     *
-     * @param password a jelszó
-     * @throws InvalidPasswordException ha a jelszó nem csak számokat tartalmaz
-     */
-    private void validatePassword(String password) throws InvalidPasswordException {
-        // Regex: Csak számokat, kisbetűket és nagybetűket enged.
-        if (!password.matches("[a-zA-Z0-9]+")) {
-            throw new InvalidPasswordException("A jelszó csak számokat, kisbetűket és nagybetűket tartalmazhat!");
-        }
-        // Ellenőrizzük, hogy a jelszó hossza legalább 8 karakter.
-        if (password.length() < 8) {
-            throw new InvalidPasswordException("A jelszónak legalább 8 karakter hosszúnak kell lennie!");
-        }
-    }
+
 
 
     public Connection getConnection() {
