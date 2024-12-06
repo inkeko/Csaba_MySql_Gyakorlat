@@ -42,7 +42,7 @@ public class DatabaseConnectionTest {
     @Test
     public void testQuery() {
         try {
-            String sql = "SELECT COUNT(*) FROM world"; // Cseréld a megfelelő táblanévre
+            String sql = "SELECT COUNT(*) FROM city"; // Cseréld a megfelelő táblanévre
             Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
             assertNotNull(count, "A lekérdezés nem adott vissza eredményt!");
             System.out.println("Teszt táblában található sorok száma: " + count);
